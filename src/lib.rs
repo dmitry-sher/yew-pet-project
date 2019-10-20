@@ -2,7 +2,9 @@
 
 mod app;
 mod utils;
+mod routes;
 
+use yew::prelude::*;
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -14,8 +16,10 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 // This is the entry point for the web app
 #[wasm_bindgen]
 pub fn run_app() -> Result<(), JsValue> {
+    yew::initialize();
     utils::set_panic_hook();
     web_logger::init();
-    yew::start_app::<app::App>();
+    App::<routes::Model>::new().mount_to_body();
+    yew::run_loop();
     Ok(())
 }
